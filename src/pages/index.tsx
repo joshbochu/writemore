@@ -1,7 +1,8 @@
 export default function Home() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div className="flex justify-center h-screen">
+      <textarea className="resize-none rounded w-1/3 h-full border-8 border-stone-200 outline-0">
+      </textarea>
+    </div >
   )
 }
