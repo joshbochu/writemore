@@ -5,7 +5,6 @@ export default function Home() {
   const [wordCount, setWordCount] = useState(0);
   const [text, setText] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-
   useEffect(() => {
     setWordCount(text.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0));
   }, [text]);
