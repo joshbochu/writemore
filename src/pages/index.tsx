@@ -13,7 +13,7 @@ export default function Home() {
     <div className={`flex justify-center h-screen ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
       <textarea
         placeholder="Write here..."
-        className={`overflow-hidden resize-none rounded w-1/3 h-full outline-0 pt-8 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
+        className={`overflow-hidden resize-none rounded w-1/3 h-full outline-0 pt-16 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
         onChange={e => setText(e.target.value)}
       >
       </textarea>
@@ -21,14 +21,19 @@ export default function Home() {
         {wordCount}
       </div>
       <div className="absolute top-0 right-0 p-4">
-        <div className="text-sm">
+        <img
+          onClick={() => setDarkMode(!darkMode)}
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a3/U%2B25D1.svg"
+          style={{ filter: darkMode ? "invert(100%)" : "invert(0%)", width: "25px", height: "25px" }}>
+        </img>
+        {/* <div className="text-sm">
           <button
             onClick={() => setDarkMode(!darkMode)}
             className={`${darkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-2 rounded-md`}
           >
-            {darkMode ? 'Light Mode' : 'Dark Mode'}
+            {darkMode ? '🌞' : 'Dark Mode'}
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
