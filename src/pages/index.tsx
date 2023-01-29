@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+//todo: optimize image and font stuff via next
 
 export default function Home() {
   const [wordCount, setWordCount] = useState(0);
