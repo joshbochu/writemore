@@ -13,10 +13,11 @@ export default function Home() {
     <div className={`flex justify-center h-screen ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
       <textarea
         placeholder="Write here..."
-        className={`overflow-hidden resize-none rounded w-1/3 h-full outline-0 pt-16 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
+        className={`overflow-y-scroll custom-scrollbar rounded w-1/3 h-full outline-0 pt-16 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
         onChange={e => setText(e.target.value)}
       >
       </textarea>
+
       <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
         {wordCount}
       </div>
