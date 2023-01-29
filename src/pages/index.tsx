@@ -24,17 +24,10 @@ export default function Home() {
       <div className="absolute top-0 right-0 p-4">
         <img
           onClick={() => setDarkMode(!darkMode)}
+          alt="toggle dark mode"
           src="https://upload.wikimedia.org/wikipedia/commons/a/a3/U%2B25D1.svg"
           style={{ filter: darkMode ? "invert(100%)" : "invert(0%)", width: "25px", height: "25px" }}>
         </img>
-        {/* <div className="text-sm">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`${darkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-2 rounded-md`}
-          >
-            {darkMode ? '🌞' : 'Dark Mode'}
-          </button>
-        </div> */}
       </div>
     </div>
   );
