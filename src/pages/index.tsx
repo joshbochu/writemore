@@ -13,12 +13,12 @@ export default function Home() {
     <div className={`flex justify-center h-screen ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
       <textarea
         placeholder="Write here..."
-        className={`overflow-hidden resize-none rounded w-1/3 h-full outline-0 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
+        className={`overflow-hidden resize-none rounded w-1/3 h-full outline-0 pt-8 ${darkMode ? 'bg-gray-800 text-white' : ''}`}
         onChange={e => setText(e.target.value)}
       >
       </textarea>
-      <div className="absolute bottom-0 right-0 p-4">
-        <div className={`text-sm ${darkMode ? 'text-white' : ''}`}>Word Count: {wordCount}</div>
+      <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
+        {wordCount}
       </div>
       <div className="absolute top-0 right-0 p-4">
         <div className="text-sm">
