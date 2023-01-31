@@ -24,6 +24,9 @@ const Write = () => {
             <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
                 {wordCount}
             </div>
+            <div className={`text-sm absolute bottom-0 left-0 p-4 ${darkMode ? 'text-white' : ''}`}>
+                <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+            </div>
             <div className="absolute top-0 right-0 p-4">
                 <img
                     onClick={() => setDarkMode(!darkMode)}
