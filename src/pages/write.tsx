@@ -21,9 +21,9 @@ const Write = () => {
                 onChange={e => setText(e.target.value)}
             >
             </textarea>
-            <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
+            {/* <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
                 {wordCount}
-            </div>
+            </div> */}
             {/* <div className={`text-sm absolute bottom-0 left-0 p-4 ${darkMode ? 'text-white' : ''}`}>
                 <button onClick={() => supabase.auth.signOut()}>Sign out</button>
             </div> */}
