@@ -3,19 +3,6 @@ import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Account from '../components/Account'
 import { useState, useEffect } from 'react'
 
-const savePost = async (taskText) => {
-    let task = taskText.trim()
-    if (task.length) {
-        let { data: todo, error } = await supabase
-            .from('todos')
-            .insert({ task, user_id: user.id })
-            .single()
-        if (error) setError(error.message)
-        else setTodos([...todo, todo])
-    }
-}
-
-
 const Write = () => {
     const session = useSession()
     const supabase = useSupabaseClient()
@@ -37,7 +24,6 @@ const Write = () => {
                     onChange={(e: any) => setText(e.target.value)}
                 >
                 </textarea>
-
             </div >
             <div>
                 <ul className="absolute top-0 right-0 m-4 text-xs list-none">
