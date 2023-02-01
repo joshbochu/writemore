@@ -13,7 +13,7 @@ const Home = () => {
           <Auth supabaseClient={supabase} />
         </div>
       ) : (
-        <Write />
+        <Write session={session} />
       )}
     </>
   )
