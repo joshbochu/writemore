@@ -24,18 +24,21 @@ const Write = () => {
             <div className={`text-sm absolute bottom-0 right-0 p-4 ${darkMode ? 'text-white' : ''}`}>
                 {wordCount}
             </div>
-            <div className={`text-sm absolute bottom-0 left-0 p-4 ${darkMode ? 'text-white' : ''}`}>
+            {/* <div className={`text-sm absolute bottom-0 left-0 p-4 ${darkMode ? 'text-white' : ''}`}>
+                <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+            </div> */}
+            <div className="absolute top-0 right-0 p-4 text-xs">
                 <button onClick={() => supabase.auth.signOut()}>Sign out</button>
             </div>
-            <div className="absolute top-0 right-0 p-4">
+            {/* <div className="absolute top-0 right-0 p-4 text-xs">
                 <img
                     onClick={() => setDarkMode(!darkMode)}
                     alt="toggle dark mode"
                     src="https://upload.wikimedia.org/wikipedia/commons/a/a3/U%2B25D1.svg"
                     style={{ filter: darkMode ? "invert(100%)" : "invert(0%)", width: "25px", height: "25px" }}>
                 </img>
-            </div>
-        </div>
+            </div> */}
+        </div >
     );
 }
 
