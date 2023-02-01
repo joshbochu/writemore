@@ -6,12 +6,11 @@ import Write from './write'
 const Home = () => {
   const session = useSession()
   const supabase = useSupabaseClient()
-
   return (
     <>
       {!session ? (
         <div className={`flex justify-center h-screen`}>
-          <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
+          <Auth supabaseClient={supabase} />
         </div>
       ) : (
         <Write />
