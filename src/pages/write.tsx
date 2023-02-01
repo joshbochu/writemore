@@ -45,7 +45,7 @@ const Write = () => {
                         <button onClick={() => supabase.auth.signOut()}>Sign out</button>
                     </li>
                 </ul>
-                <button className="absolute bottom-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600">Save</button>
+                <button className="absolute bottom-0 right-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600">Save</button>
             </div>
         </div >
 
