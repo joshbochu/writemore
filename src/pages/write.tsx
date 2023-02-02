@@ -39,13 +39,15 @@ const Write = ({ session }) => {
     return (
         <div className="grid grid-cols-3">
             <div></div>
-            <div className="flex">
+            <div className="flex flex-col space-between h-screen">
+                {/* <div>Header</div> */}
                 <textarea
                     placeholder="Write here..."
-                    className="custom-scrollbar resize-none w-full h-screen outline-0 pt-16"
+                    className="grow custom-scrollbar resize-none w-full outline-0 pt-16"
                     onChange={(e: any) => setText(e.target.value)}
                 >
                 </textarea>
+                <div className="flex justify-center">{wordCount}</div>
             </div >
             <div>
                 <ul className="absolute top-0 right-0 m-4 text-xs list-none">
