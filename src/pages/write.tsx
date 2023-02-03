@@ -44,13 +44,13 @@ const Write = ({ session, supabase }) => {
         <div className="grid grid-cols-3">
             <div></div>
             <div className="flex flex-col space-between h-screen">
-                <div style={{ display: showAuthContainer && !session ? 'none' : 'block' }}>
+                {!(showAuthContainer && !session) && (
                     <textarea
                         placeholder="Write here..."
                         className="grow custom-scrollbar resize-none w-full outline-0 pt-16"
                         onChange={(e) => setText(e.target.value)}
                     ></textarea>
-                </div>
+                )}
                 {!session && showAuthContainer && (
                     <div id="auth-container" className="flex flex-col">
                         <div className="flex justify-center text-xl">Looks like you aren't signed up!</div>
@@ -68,18 +68,20 @@ const Write = ({ session, supabase }) => {
                         </li>
                     )}
                 </ul>
-                <button
-                    className="absolute bottom-0 right-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600"
-                    onClick={() => {
-                        if (session) {
-                            savePost();
-                        } else {
-                            setShowAuthContainer(true);
-                        }
-                    }}
-                >
-                    Save
-                </button>
+                {!showAuthContainer && (
+                    <button
+                        className="absolute bottom-0 right-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600"
+                        onClick={() => {
+                            if (session) {
+                                savePost();
+                            } else {
+                                setShowAuthContainer(true);
+                            }
+                        }}
+                    >
+                        Save
+                    </button>
+                )}
             </div>
         </div>
     );
