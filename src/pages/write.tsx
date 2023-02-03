@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 
 const Write = ({ session, supabase }) => {
     const user = useUser();
+    const [savedPost, setSavedPost] = useState(new Date())
     const [wordCount, setWordCount] = useState(0);
     const [text, setText] = useState('');
     const [showAuthContainer, setShowAuthContainer] = useState(false);
@@ -17,8 +18,16 @@ const Write = ({ session, supabase }) => {
     useEffect(() => {
         if (session) {
             setShowAuthContainer(false);
+            savePost()
+            setSavedPost(new Date(Date.now()))
         }
     }, [session]);
+
+    const getLastSavedTime = () => savedPost.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    })
 
     async function savePost() {
         if (wordCount === 0) return;
@@ -44,7 +53,7 @@ const Write = ({ session, supabase }) => {
         <div className="grid grid-cols-3">
             <div></div>
             <div className="flex flex-col space-between h-screen">
-                {!(showAuthContainer && !session) && (
+                {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder="Write here..."
                         className="grow custom-scrollbar resize-none w-full outline-0 pt-16"
@@ -61,19 +70,21 @@ const Write = ({ session, supabase }) => {
                 )}
             </div>
             <div>
-                <ul className="absolute top-0 right-0 m-4 text-xs list-none">
-                    {session && (
+                {session && (
+                    <ul className="absolute top-0 right-0 m-4 text-xs list-none">
                         <li>
                             <button onClick={() => supabase.auth.signOut()}>Sign out</button>
                         </li>
-                    )}
-                </ul>
+                        <li>{getLastSavedTime()}</li>
+                    </ul>
+                )}
                 {!showAuthContainer && (
                     <button
                         className="absolute bottom-0 right-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600"
                         onClick={() => {
                             if (session) {
                                 savePost();
+                                setSavedPost(new Date(Date.now()))
                             } else {
                                 setShowAuthContainer(true);
                             }
