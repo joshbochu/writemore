@@ -70,6 +70,12 @@ const Write = ({ session, supabase }) => {
                 )}
             </div>
             <div>
+                {(!session && !showAuthContainer) && (
+                    <ul className="absolute top-0 right-0 m-4 text-xs list-none">
+                        <li>
+                            <button onClick={() => setShowAuthContainer(true)}>Sign In</button>
+                        </li>
+                    </ul>)}
                 {session && (
                     <ul className="absolute top-0 right-0 m-4 text-xs list-none">
                         <li>
