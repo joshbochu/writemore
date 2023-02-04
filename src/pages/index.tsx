@@ -8,13 +8,7 @@ const Home = () => {
   const supabase = useSupabaseClient()
   return (
     <>
-      {/* {!session ? (
-        <div className="flex justify-center">
-          <Auth supabaseClient={supabase} />
-        </div>
-      ) : ( */}
       <Write session={session} supabase={supabase} />
-      {/* )} */}
     </>
   )
 }
