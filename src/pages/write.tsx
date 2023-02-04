@@ -1,10 +1,9 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { SupabaseClient, useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-import Account from '../components/Account'
 import { useState, useEffect } from 'react'
 
 
-const Write = ({ session, supabase }) => {
+const Write = ({ session, supabase }: any): JSX.Element => {
     const user = useUser();
     const [savedPost, setSavedPost] = useState(new Date())
     const [wordCount, setWordCount] = useState(0);
