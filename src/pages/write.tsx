@@ -29,9 +29,10 @@ const Write = ({ session, supabase }: any): JSX.Element => {
     })
 
     async function savePost() {
-        if (wordCount === 0) return;
-        const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
-        console.log(data, error)
+        if (wordCount > 0) {
+            const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
+            console.log(data, error)
+        }
     }
 
     return (
