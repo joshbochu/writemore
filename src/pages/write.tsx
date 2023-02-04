@@ -47,7 +47,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                 )}
                 {!session && showAuthContainer && (
                     <div id="auth-container" className="flex flex-col">
-                        <div className="flex justify-center text-xl">Looks like you aren't signed up!</div>
+                        {/* <div className="flex justify-center text-xl">Looks like you aren't signed up!</div> */}
                         <div className="flex justify-center">
                             <Auth supabaseClient={supabase} />
                         </div>
