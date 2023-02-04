@@ -50,7 +50,8 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                         placeholder='Write here...'
                         className="bg-transparent grow custom-scrollbar resize-none w-full outline-0"
                         onChange={(e) => setText(e.target.value)}
-                    >{text}</textarea>
+                        value={text}
+                    ></textarea>
                 )}
                 {!session && showAuthContainer && (
                     <div id="auth-container" className="flex flex-col">
