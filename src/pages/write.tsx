@@ -63,9 +63,9 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                     <div className="flex flex-row justify-between">
                         <div className="p-2 px-0 text-xs">{wordCount} words</div>
                         <div className="px-0 text-xs font-semibold">
-                            {!session && wordCount > 0 && (
+                            {!session && wordCount >= 1 && (
                                 <div className="bg-orange-100 border-orange-500 text-orange-700 p-1" role="alert">
-                                    <p className="font-bold">Don't forget to save!</p>
+                                    <p className="font-bold">Sign up to save!</p>
                                 </div>
                             )}
                         </div>
@@ -75,19 +75,19 @@ const Write = ({ session, supabase }: any): JSX.Element => {
             <div className='pt-16'>
                 <ul className="list-none space-y-2">
                     {!showAuthContainer && (
-                        <li className='flex flex-row'>
-                            <button onClick={onSave}
-                                className="mx-4 px-1 text-xs border-solid border-2 border-black">
-                                Save
-                            </button>
-
-                        </li>
+                        <></>
+                        // <li className='flex flex-row'>
+                        //     <button onClick={onSave}
+                        //         className="mx-4 px-1 text-xs border-solid border-2 border-black">
+                        //         Save
+                        //     </button>
+                        // </li>
                     )}
                     {(!session && !showAuthContainer) && (
                         <li>
                             <button
                                 className="mx-4 px-1 text-xs border-solid border-2 border-black"
-                                onClick={() => setShowAuthContainer(true)}>Login</button>
+                                onClick={() => setShowAuthContainer(true)}>Sign Up</button>
                         </li>
                     )}
                     {session && (
@@ -95,10 +95,19 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                             <li>
                                 <button
                                     className="mx-4 px-1 text-xs border-solid border-2 border-black"
-                                    onClick={() => supabase.auth.signOut()}>Logout</button>
+                                    onClick={() => supabase.auth.signOut()}>Sign Out</button>
                             </li>
                         </>
                     )}
+                    {/* {!showAuthContainer && (
+                        <li>
+                            <button
+                                className="mx-4 px-1 text-xs border-solid border-2 border-black"
+                                onClick={() => null}>
+                                About
+                            </button>
+                        </li>
+                    )} */}
                 </ul>
             </div>
         </div >
