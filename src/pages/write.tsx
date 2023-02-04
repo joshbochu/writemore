@@ -55,20 +55,32 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                 {!session && showAuthContainer && (
                     <div id="auth-container" className="flex flex-col">
                         <div className="flex justify-center">
-                            <Auth supabaseClient={supabase} />
+                            <Auth supabaseClient={supabase} view='sign_up' />
                         </div>
                     </div>
                 )}
-                {!showAuthContainer && (<div className="p-2 px-0 text-xs">{wordCount}</div>)}
+                {!showAuthContainer && (
+                    <div className="flex flex-row justify-between">
+                        <div className="p-2 px-0 text-xs">{wordCount} words</div>
+                        <div className="px-0 text-xs font-semibold">
+                            {!session && wordCount > 0 && (
+                                <div className="bg-orange-100 border-orange-500 text-orange-700 p-1" role="alert">
+                                    <p className="font-bold">Don't forget to save!</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>)}
+
             </div>
             <div className='pt-16'>
                 <ul className="list-none space-y-2">
                     {!showAuthContainer && (
-                        <li>
+                        <li className='flex flex-row'>
                             <button onClick={onSave}
                                 className="mx-4 px-1 text-xs border-solid border-2 border-black">
                                 Save
                             </button>
+
                         </li>
                     )}
                     {(!session && !showAuthContainer) && (
