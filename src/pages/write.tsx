@@ -17,7 +17,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
     useEffect(() => {
         if (session) {
             setShowAuthContainer(false);
-            savePost()
+            onSave()
             setSavedPost(new Date(Date.now()))
         }
     }, [session]);
@@ -28,21 +28,26 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         second: 'numeric'
     })
 
-    async function savePost() {
-        if (wordCount > 0) {
-            const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
-            console.log(data, error)
+
+    const onSave = async () => {
+        if (session) {
+            if (wordCount > 0) {
+                const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
+                console.log(data, error)
+            }
+            setSavedPost(new Date(Date.now()))
+        } else {
+            setShowAuthContainer(true);
         }
     }
 
     return (
         <div className="grid grid-cols-3">
             <div></div>
-            <div className="flex flex-col space-between h-screen">
+            <div className="flex flex-col space-between h-screen pt-16">
                 {!(!session && showAuthContainer) && (
                     <textarea
-                        placeholder="Write here..."
-                        className="grow custom-scrollbar resize-none w-full outline-0 pt-16"
+                        className="bg-transparent grow custom-scrollbar resize-none w-full outline-0"
                         onChange={(e) => setText(e.target.value)}
                     ></textarea>
                 )}
@@ -54,9 +59,16 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                         </div>
                     </div>
                 )}
+                <div className="p-2 px-0 text-xs">{wordCount}</div>
             </div>
-            <div>
-                {(!session && !showAuthContainer) && (
+            <div className='pt-16'>
+                {!showAuthContainer && (
+                    <button onClick={onSave}
+                        className="mx-4 px-1 text-xs border-solid rounded border-2 border-black">
+                        Save
+                    </button>
+                )}
+                {/* {/* {(!session && !showAuthContainer) && (
                     <ul className="absolute top-0 right-0 m-4 text-xs list-none">
                         <li>
                             <button onClick={() => setShowAuthContainer(true)}>Sign In</button>
@@ -69,24 +81,9 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                         </li>
                         <li>{getLastSavedTime()}</li>
                     </ul>
-                )}
-                {!showAuthContainer && (
-                    <button
-                        className="absolute bottom-0 right-0 m-4 p-1 text-xs border-solid rounded border-2 border-indigo-600"
-                        onClick={() => {
-                            if (session) {
-                                savePost();
-                                setSavedPost(new Date(Date.now()))
-                            } else {
-                                setShowAuthContainer(true);
-                            }
-                        }}
-                    >
-                        Save
-                    </button>
-                )}
+                )} */}
             </div>
-        </div>
+        </div >
     );
 };
 
