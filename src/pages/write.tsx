@@ -47,41 +47,47 @@ const Write = ({ session, supabase }: any): JSX.Element => {
             <div className="flex flex-col space-between h-screen pt-16">
                 {!(!session && showAuthContainer) && (
                     <textarea
+                        placeholder='Write here...'
                         className="bg-transparent grow custom-scrollbar resize-none w-full outline-0"
                         onChange={(e) => setText(e.target.value)}
                     ></textarea>
                 )}
                 {!session && showAuthContainer && (
                     <div id="auth-container" className="flex flex-col">
-                        {/* <div className="flex justify-center text-xl">Looks like you aren't signed up!</div> */}
                         <div className="flex justify-center">
                             <Auth supabaseClient={supabase} />
                         </div>
                     </div>
                 )}
-                <div className="p-2 px-0 text-xs">{wordCount}</div>
+                {!showAuthContainer && (<div className="p-2 px-0 text-xs">{wordCount}</div>)}
             </div>
             <div className='pt-16'>
-                {!showAuthContainer && (
-                    <button onClick={onSave}
-                        className="mx-4 px-1 text-xs border-solid rounded border-2 border-black">
-                        Save
-                    </button>
-                )}
-                {/* {/* {(!session && !showAuthContainer) && (
-                    <ul className="absolute top-0 right-0 m-4 text-xs list-none">
+                <ul className="list-none">
+                    {!showAuthContainer && (
                         <li>
-                            <button onClick={() => setShowAuthContainer(true)}>Sign In</button>
+                            <button onClick={onSave}
+                                className="mx-4 px-1 text-xs border-solid border-2 border-black">
+                                Save
+                            </button>
                         </li>
-                    </ul>)}
-                {session && (
-                    <ul className="absolute top-0 right-0 m-4 text-xs list-none">
+                    )}
+                    {(!session && !showAuthContainer) && (
                         <li>
-                            <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+                            <button
+                                className="mx-4 px-1 text-xs border-solid border-2 border-black"
+                                onClick={() => setShowAuthContainer(true)}>Login</button>
                         </li>
-                        <li>{getLastSavedTime()}</li>
-                    </ul>
-                )} */}
+                    )}
+                    {session && (
+                        <>
+                            <li>
+                                <button
+                                    className="mx-4 px-1 text-xs border-solid border-2 border-black"
+                                    onClick={() => supabase.auth.signOut()}>Logout</button>
+                            </li>
+                        </>
+                    )}
+                </ul>
             </div>
         </div >
     );
