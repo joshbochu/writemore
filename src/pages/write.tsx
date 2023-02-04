@@ -18,7 +18,6 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         if (session) {
             setShowAuthContainer(false);
             onSave()
-            setSavedPost(new Date(Date.now()))
         }
     }, [session]);
 
