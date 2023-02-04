@@ -62,7 +62,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                 {!showAuthContainer && (<div className="p-2 px-0 text-xs">{wordCount}</div>)}
             </div>
             <div className='pt-16'>
-                <ul className="list-none">
+                <ul className="list-none space-y-2">
                     {!showAuthContainer && (
                         <li>
                             <button onClick={onSave}
