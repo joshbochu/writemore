@@ -31,22 +31,8 @@ const Write = ({ session, supabase }) => {
 
     async function savePost() {
         if (wordCount === 0) return;
-        try {
-            const { data, error } = await supabase
-                .from('posts')
-                .insert({ post: text, user_id: user!.id, word_count: wordCount })
-                .select()
-            //conflict will bust
-            if (error?.code === "23505") {
-                const { data, error } = await supabase
-                    .from('posts')
-                    .update({ post: text, user_id: user!.id, word_count: wordCount })
-                    .eq('user_id', user!.id)
-            }
-        }
-        catch (err) {
-            // todo
-        }
+        const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
+        console.log(data, error)
     }
 
     return (
