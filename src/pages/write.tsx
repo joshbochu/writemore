@@ -51,6 +51,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
 
     return (
         <div className="grid grid-cols-3">
+            <div></div>
             <div className="flex flex-col space-between h-screen pt-16">
                 {!(!session && showAuthContainer) && (
                     <textarea
