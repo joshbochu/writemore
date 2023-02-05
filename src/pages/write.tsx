@@ -1,13 +1,14 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { SupabaseClient, useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { useState, useEffect } from 'react'
+import useLocalStorage from 'use-local-storage';
 
 
 const Write = ({ session, supabase }: any): JSX.Element => {
     const user = useUser();
     const [savedPost, setSavedPost] = useState(new Date())
     const [wordCount, setWordCount] = useState(0);
-    const [text, setText] = useState('');
+    const [text, setText] = useLocalStorage<string>('text', '')
     const [showAuthContainer, setShowAuthContainer] = useState(false);
 
     useEffect(() => {
