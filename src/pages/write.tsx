@@ -49,10 +49,12 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         }
     }
 
+    const streakCount = 0;
+
     return (
         <div className="grid grid-cols-3">
             <div></div>
-            <div className="flex flex-col space-between h-screen pt-16">
+            <div className="flex flex-col space-between h-screen pt-8">
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
@@ -70,7 +72,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                 )}
                 {!showAuthContainer && (
                     <div className="flex flex-row justify-between">
-                        <div className="p-2 px-0 text-xs">{wordCount} words</div>
+                        <div className="p-2 px-0 text-xs">{wordCount} words{streakCount > 0 && ` • 🔥 ${streakCount}`}</div>
                         <div className="px-0 text-xs font-semibold">
                             {!session && wordCount >= 1 && (
                                 <div className="bg-orange-100 border-orange-500 text-orange-700 p-1" role="alert">
@@ -81,7 +83,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                     </div>)}
 
             </div>
-            <div className='pt-16'>
+            <div className='pt-8'>
                 <ul className="list-none space-y-2">
                     {!showAuthContainer && (
                         <></>
