@@ -27,6 +27,15 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         second: 'numeric'
     })
 
+    const getStreak = async () => {
+        let sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0,)
+        const { data, error } = await supabase
+            .from('posts')
+            .select('inserted_at')
+            .gt('inserted_at', sevenDaysAgo)
+        console.log(data)
+    }
+
 
     const onSave = async () => {
         if (session) {
@@ -42,7 +51,6 @@ const Write = ({ session, supabase }: any): JSX.Element => {
 
     return (
         <div className="grid grid-cols-3">
-            <div></div>
             <div className="flex flex-col space-between h-screen pt-16">
                 {!(!session && showAuthContainer) && (
                     <textarea
