@@ -53,9 +53,8 @@ const Write = ({ session, supabase }: any): JSX.Element => {
     const streakCount = 0;
 
     return (
-        <div className="grid grid-cols-3">
-            <div></div>
-            <div className="flex flex-col space-between h-screen pt-8">
+        <div className="grid grid-cols-7">
+            <div className="col-start-3 col-span-3 flex flex-col space-between h-screen pt-8">
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
