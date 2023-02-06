@@ -2,6 +2,8 @@ import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { SupabaseClient, useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { useState, useEffect } from 'react'
 import useLocalStorage from 'use-local-storage';
+import { range } from 'lodash';
+import Image from 'next/image';
 
 
 const Write = ({ session, supabase }: any): JSX.Element => {
@@ -51,10 +53,21 @@ const Write = ({ session, supabase }: any): JSX.Element => {
     }
 
     const streakCount = 0;
+    const streakIconSize = 20;
+
 
     return (
         <div className="grid grid-cols-7">
             <div className="col-start-3 col-span-3 flex flex-col space-between h-screen pt-8">
+                {/* <div className="flex flex-row justify-between">
+                    {
+                        Array.from(new Array(30), (x, i) => {
+                            return i < 12 ?
+                                (<Image src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />) :
+                                (<Image src="/square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)
+                        })
+                    }
+                </div> */}
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
