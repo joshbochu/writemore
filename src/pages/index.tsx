@@ -8,7 +8,7 @@ const Home = () => {
   const user = useUser()
   return (
     <>
-      <Write session={session} supabase={supabase} user={ser} />
+      <Write session={session} supabase={supabase} user={user} />
     </>
   )
 }
