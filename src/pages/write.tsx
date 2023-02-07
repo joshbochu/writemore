@@ -2,16 +2,17 @@ import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { SupabaseClient, useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { useState, useEffect } from 'react'
 import useLocalStorage from 'use-local-storage';
-import { range } from 'lodash';
-import Image from 'next/image';
+import { useAutosave } from 'react-autosave';
 
 
 const Write = ({ session, supabase }: any): JSX.Element => {
     const user = useUser();
-    const [savedPost, setSavedPost] = useState(new Date())
+    const [savedPostTime, setSavedPostTime] = useState(new Date())
     const [wordCount, setWordCount] = useState(0);
     const [text, setText] = useLocalStorage<string>('text', '')
+    useAutosave({ data: text, onSave: onSave, interval: 5000 });
     const [showAuthContainer, setShowAuthContainer] = useState(false);
+    const [showSavedEntry, setShowSavedEntry] = useState(false);
 
     useEffect(() => {
         setWordCount(text.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0));
@@ -24,7 +25,7 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         }
     }, [session]);
 
-    const getLastSavedTime = () => savedPost.toLocaleString('en-US', {
+    const getLastSavedTime = () => savedPostTime.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric'
@@ -40,13 +41,19 @@ const Write = ({ session, supabase }: any): JSX.Element => {
     }
 
 
-    const onSave = async () => {
+    async function onSave() {
+        console.log('savin')
         if (session) {
             if (wordCount > 0) {
                 const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
-                console.log(data, error)
+                if (!error) {
+                    setShowSavedEntry(true)
+                    setTimeout(() => {
+                        setShowSavedEntry(false);
+                    }, 3000);
+                }
             }
-            setSavedPost(new Date(Date.now()))
+            setSavedPostTime(new Date(Date.now()))
         } else {
             setShowAuthContainer(true);
         }
@@ -85,7 +92,8 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                 )}
                 {!showAuthContainer && (
                     <div className="flex flex-row justify-between">
-                        <div className="p-2 px-0 text-xs">{wordCount} words{streakCount > 0 && ` • 🔥 ${streakCount}`}</div>
+                        {/* <div className="p-2 px-0 text-xs">{wordCount} words{streakCount > 0 && ` | 🔥 ${streakCount}`}</div> */}
+                        <div className="p-2 px-0 text-xs">{wordCount} words {session && showSavedEntry && `• ✓ saved`}</div>
                         <div className="px-0 text-xs font-semibold">
                             {!session && wordCount >= 1 && (
                                 <div className="bg-orange-100 border-orange-500 text-orange-700 p-1" role="alert">
@@ -94,7 +102,6 @@ const Write = ({ session, supabase }: any): JSX.Element => {
                             )}
                         </div>
                     </div>)}
-
             </div>
             <div className='pt-8'>
                 <ul className="list-none space-y-2">
