@@ -43,7 +43,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     }, [session]);
 
     async function onSave() {
-        console.log('savin')
         if (session && wordCount > 0) {
             const { _, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
             if (!error) {
