@@ -12,6 +12,15 @@ const getSavedAtTime = (time: Date) => time.toLocaleString('en-US', {
     second: 'numeric'
 })
 
+// const getStreak = async () => {
+//     let sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0,)
+//     const { data, error } = await supabase
+//         .from('posts')
+//         .select('inserted_at')
+//         .gt('inserted_at', sevenDaysAgo)
+//     console.log(data)
+// }
+
 
 const Write = ({ session, supabase, user }: any): JSX.Element => {
     const [text, setText] = useLocalStorage<string>('text', '')
@@ -33,37 +42,22 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
         }
     }, [session]);
 
-
-    const getStreak = async () => {
-        let sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0,)
-        const { data, error } = await supabase
-            .from('posts')
-            .select('inserted_at')
-            .gt('inserted_at', sevenDaysAgo)
-        console.log(data)
-    }
-
-
     async function onSave() {
         console.log('savin')
-        if (session) {
-            if (wordCount > 0) {
-                const { data, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
-                if (!error) {
-                    setShowSavedEntry(true)
-                    setTimeout(() => {
-                        setShowSavedEntry(false);
-                    }, 3000);
-                }
+        if (session && wordCount > 0) {
+            const { _, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
+            if (!error) {
+                setSavedPostTime(new Date(Date.now()))
+                setShowSavedEntry(true)
+                setTimeout(() => {
+                    setShowSavedEntry(false);
+                }, 3000);
             }
-            setSavedPostTime(new Date(Date.now()))
-        } else {
-            setShowAuthContainer(true);
         }
     }
 
-    const streakCount = 0;
-    const streakIconSize = 20;
+    // const streakCount = 0;
+    // const streakIconSize = 20;
 
 
     return (
