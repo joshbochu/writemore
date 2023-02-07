@@ -1,6 +1,6 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-import Write from './write'
+import Write from '../components/Write'
 
 const Home = () => {
   const session = useSession()
