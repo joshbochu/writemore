@@ -4,18 +4,26 @@ import { useState, useEffect } from 'react'
 import useLocalStorage from 'use-local-storage';
 import { useAutosave } from 'react-autosave';
 
+const getWordCount = (words: string) => words.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0);
 
-const Write = ({ session, supabase }: any): JSX.Element => {
-    const user = useUser();
-    const [savedPostTime, setSavedPostTime] = useState(new Date())
-    const [wordCount, setWordCount] = useState(0);
+const getSavedAtTime = (time: Date) => time.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+})
+
+
+const Write = ({ session, supabase, user }: any): JSX.Element => {
     const [text, setText] = useLocalStorage<string>('text', '')
     useAutosave({ data: text, onSave: onSave, interval: 5000 });
+
     const [showAuthContainer, setShowAuthContainer] = useState(false);
     const [showSavedEntry, setShowSavedEntry] = useState(false);
+    const [savedPostTime, setSavedPostTime] = useState(new Date())
+    const [wordCount, setWordCount] = useState(0);
 
     useEffect(() => {
-        setWordCount(text.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0));
+        setWordCount(getWordCount(text));
     }, [text]);
 
     useEffect(() => {
@@ -25,11 +33,6 @@ const Write = ({ session, supabase }: any): JSX.Element => {
         }
     }, [session]);
 
-    const getLastSavedTime = () => savedPostTime.toLocaleString('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    })
 
     const getStreak = async () => {
         let sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0,)
