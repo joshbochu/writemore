@@ -55,7 +55,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
         }
     }
 
-    // const streakCount = 0;
     // const streakIconSize = 20;
 
 
@@ -88,7 +87,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                 )}
                 {!showAuthContainer && (
                     <div className="flex flex-row justify-between">
-                        {/* <div className="p-2 px-0 text-xs">{wordCount} words{streakCount > 0 && ` | 🔥 ${streakCount}`}</div> */}
                         <div className="p-2 px-0 text-xs">{wordCount} words {session && showSavedEntry && `• ✓ saved`}</div>
                         <div className="px-0 text-xs font-semibold">
                             {!session && wordCount >= 1 && (
@@ -101,15 +99,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
             </div>
             <div className='pt-8'>
                 <ul className="list-none space-y-2">
-                    {!showAuthContainer && (
-                        <></>
-                        // <li className='flex flex-row'>
-                        //     <button onClick={onSave}
-                        //         className="mx-4 px-1 text-xs border-solid border-2 border-black">
-                        //         Save
-                        //     </button>
-                        // </li>
-                    )}
                     {(!session && !showAuthContainer) && (
                         <li>
                             <button
@@ -126,15 +115,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                             </li>
                         </>
                     )}
-                    {/* {!showAuthContainer && (
-                        <li>
-                            <button
-                                className="mx-4 px-1 text-xs border-solid border-2 border-black"
-                                onClick={() => null}>
-                                About
-                            </button>
-                        </li>
-                    )} */}
                 </ul>
             </div>
         </div >
