@@ -81,12 +81,10 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     useEffect(() => {
         if (session) {
             setShowAuthContainer(false);
-            onSave()
-            if (postsThisMonth.length === 0) {
-                const posts = getPostsThisMonth().then(posts => { setPostsThisMonth(posts); console.log(posts) })
-            }
+            getPostsThisMonth()
         }
     }, [session]);
+
 
     async function onSave() {
         if (session && wordCount > 0) {
@@ -112,7 +110,7 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                     const dayTimestamp = timestamps.find(ts => new Date(ts).getDate() === i);
                     streaks.push(dayTimestamp || null);
                 }
-                return streaks
+                setPostsThisMonth(streaks);
             }
         }
     }
@@ -127,9 +125,9 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
             <div className="col-start-3 col-span-3 flex flex-col space-between h-screen pt-4">
                 <div className="flex flex-row justify-between">
                     {session && postsThisMonth && (
-                        postsThisMonth.map((p: string | null) => p === null ?
-                            (<Image src="/square.svg" height={streakIconSize} width={streakIconSize} alt="x" />) :
-                            (<Image src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)))
+                        postsThisMonth.map((p: string | null, i: number) => p === null ?
+                            (<Image key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="x" />) :
+                            (<Image key={i} src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)))
                     }
                 </div>
                 {!(!session && showAuthContainer) && (
