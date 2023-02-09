@@ -16,7 +16,8 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     const [showSavePost, setShowSavedPost] = useState(false);
     const [wordCount, setWordCount] = useState(0);
 
-    const [postsThisMonth, setPostsThisMonth] = useState<any>([]);
+    const daysInMonth = new Date(Date.now()).getMonth() === 1 ? 28 : 31;
+    const [postsThisMonth, setPostsThisMonth] = useState<any>(Array(daysInMonth).fill(null));
 
 
     useEffect(() => {
@@ -65,18 +66,19 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
 
     return (
         <div className="grid grid-cols-7">
-            <div className="col-start-3 col-span-3 flex flex-col space-between h-screen pt-4">
+            <div className="col-start-3 col-span-3 flex flex-col space-between h-screen space-y-8 pt-8">
                 <div className="flex flex-row justify-between">
-                    {session && postsThisMonth && (
-                        postsThisMonth.map((p: string | null, i: number) => p === null ?
-                            (<Image key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="-" />) :
-                            (<Image key={i} src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)))
+                    {
+                        postsThisMonth.map((p: string | null, i: number) =>
+                            p === null ?
+                                <Image className={`${session ? '' : 'hidden'}`} key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="-" /> :
+                                <Image className={`${session ? '' : 'hidden'}`} key={i} src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)
                     }
                 </div>
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
-                        className={`bg-transparent grow custom-scrollbar resize-none w-full outline-0 pt-${session ? "12" : "16"}`}
+                        className={`bg-transparent grow custom-scrollbar resize-none w-full outline-0`}
                         onChange={(e) => setText(e.target.value)}
                         value={text}
                     ></textarea>
@@ -101,12 +103,12 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                     </div>)
                 }
             </div >
-            <div className='pt-20'>
+            <div className={`${session ? 'pt-20' : 'pt-16'}`}>
                 <ul className="list-none space-y-2">
                     {(!session && !showAuthContainer) && (
                         <li>
                             <button
-                                className="mx-4 px-1 text-xs border-solid border-2 border-black"
+                                className="mx-8 px-1 text-xs border-solid border-2 border-black"
                                 onClick={() => setShowAuthContainer(true)}>Sign Up</button>
                         </li>
                     )}
