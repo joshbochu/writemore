@@ -8,67 +8,12 @@ import Image from 'next/image'
 
 const getWordCount = (words: string) => words.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0);
 
-const getSavedAtTime = (time: Date) => time.toLocaleString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
-})
-
-const getDaysThisMonth = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    return new Date(year, month + 1, 0).getDate();
-};
-
-
-// const getStreak = async () => {
-//     let sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0,)
-//     const { data, error } = await supabase
-//         .from('posts')
-//         .select('inserted_at')
-//         .gt('inserted_at', sevenDaysAgo)
-//     console.log(data)
-// }
-
-
-// function jsTimestampToPostgresTimestampUTC(jsTimestamp: string | number | Date) {
-//     const date = new Date(jsTimestamp);
-//     const offset = -date.getTimezoneOffset() / 60;
-//     date.setHours(date.getHours() + offset);
-//     return date.toISOString().slice(0, 19).replace('T', ' ');
-// }
-
-// function firstDayOfCurrentMonthAndNextMonth() {
-//     const now = new Date();
-//     const currentMonth = now.getMonth();
-//     const currentYear = now.getFullYear();
-
-//     const firstDayOfCurrentMonth = new Date(currentYear, currentMonth, 1, 0, 0, 0, 0);
-//     const firstDayOfNextMonth = new Date(currentYear, currentMonth + 1, 1, 0, 0, 0, 0);
-
-//     return [firstDayOfCurrentMonth.getTime(), firstDayOfNextMonth.getTime()];
-// }
-
-
-// async function getPostsThisMonth() {
-//     const [curr, next] = firstDayOfCurrentMonthAndNextMonth();
-//     const start = jsTimestampToPostgresTimestampUTC(curr)
-//     const end = jsTimestampToPostgresTimestampUTC(next)
-//     const { data, error } = await supabase
-//         .from('posts')
-//         .select()
-//         .gte('inserted_at', start)
-//         .lt('inserted_at', end)
-// }
-
 const Write = ({ session, supabase, user }: any): JSX.Element => {
     const [text, setText] = useLocalStorage<string>('text', '')
     useAutosave({ data: text, onSave: onSave, interval: 5000 });
 
     const [showAuthContainer, setShowAuthContainer] = useState(false);
     const [showSavePost, setShowSavedPost] = useState(false);
-    const [savedPostTime, setSavedPostTime] = useState(new Date())
     const [wordCount, setWordCount] = useState(0);
 
     const [postsThisMonth, setPostsThisMonth] = useState<any>([]);
@@ -90,7 +35,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
         if (session && wordCount > 0) {
             const { _, error } = await supabase.rpc('upsert_posts', { p_user_id: user!.id, p_post: text, p_word_count: wordCount })
             if (!error) {
-                setSavedPostTime(new Date(Date.now()))
                 setShowSavedPost(true)
                 setTimeout(() => {
                     setShowSavedPost(false);
@@ -117,7 +61,6 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
 
 
     const streakIconSize = 18;
-    const daysThisMonth = getDaysThisMonth();
 
 
     return (
@@ -126,7 +69,7 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                 <div className="flex flex-row justify-between">
                     {session && postsThisMonth && (
                         postsThisMonth.map((p: string | null, i: number) => p === null ?
-                            (<Image key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="x" />) :
+                            (<Image key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="-" />) :
                             (<Image key={i} src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)))
                     }
                 </div>
