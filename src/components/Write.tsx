@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import useLocalStorage from 'use-local-storage';
 import { useAutosave } from 'react-autosave';
 import Image from 'next/image'
+import Streak from './Streak';
 
 const getWordCount = (words: string) => words.split(/\s|\n/g).reduce((acc, curr) => curr ? acc + 1 : acc, 0);
 
@@ -61,20 +62,13 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     }
 
 
-    const streakIconSize = 18;
+    const ICON_SIZE = 18;
 
 
     return (
         <div className="grid grid-cols-7">
             <div className="col-start-3 col-span-3 flex flex-col space-between h-screen space-y-8 pt-8">
-                <div className="flex flex-row justify-between">
-                    {
-                        postsThisMonth.map((p: string | null, i: number) =>
-                            p === null ?
-                                <Image className={`${session ? '' : 'hidden'}`} key={i} src="/square.svg" height={streakIconSize} width={streakIconSize} alt="-" /> :
-                                <Image className={`${session ? '' : 'hidden'}`} key={i} src="/x-square.svg" height={streakIconSize} width={streakIconSize} alt="x" />)
-                    }
-                </div>
+                <Streak timestamps={postsThisMonth} showStreak={true} iconSize={ICON_SIZE} />
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
