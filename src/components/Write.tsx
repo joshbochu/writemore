@@ -61,14 +61,10 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
         }
     }
 
-
-    const ICON_SIZE = 18;
-
-
     return (
         <div className="grid grid-cols-7">
             <div className="col-start-3 col-span-3 flex flex-col space-between h-screen space-y-8 pt-8">
-                <Streak timestamps={postsThisMonth} showStreak={true} iconSize={ICON_SIZE} />
+                <Streak timestamps={postsThisMonth} showStreak={session ? true : false} iconSize={18} />
                 {!(!session && showAuthContainer) && (
                     <textarea
                         placeholder='Write here...'
