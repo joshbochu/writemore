@@ -46,18 +46,15 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     }
 
     async function getPostsThisMonth() {
-        if (session) {
-            const { data, error } = await supabase.rpc('get_posts_inserted_this_month')
-            if (!error) {
-                const timestamps = Array.from(data, (x: { inserted_at_column: string }) => x.inserted_at_column);
-                const streaks = [];
-                const daysInMonth = new Date(Date.now()).getMonth() === 1 ? 28 : 31;
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const dayTimestamp = timestamps.find(ts => new Date(ts).getDate() === i);
-                    streaks.push(dayTimestamp || null);
-                }
-                setPostsThisMonth(streaks);
+        const { data, error } = await supabase.rpc('get_posts_inserted_this_month')
+        if (!error) {
+            const ts = Array.from(data, (x: { inserted_at_column: string }) => x.inserted_at_column);
+            const streaks = [];
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayTimestamp = ts.find(t => new Date(t).getDate() === i);
+                streaks.push(dayTimestamp || null);
             }
+            setPostsThisMonth(streaks);
         }
     }
 
