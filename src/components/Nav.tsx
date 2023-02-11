@@ -13,9 +13,16 @@ const NavItem = ({ }: INavItem) => {
 const Nav = ({ inSession }: INav) => {
     const noSessionItems = [{ name: 'Sign In' }, { name: 'About' }]
     const inSessionItems = [{ name: 'Sign Out' }, { name: 'About' }, { name: 'Settings' }]
-    return (<div>
-        { }
-    </div>)
+    const items = inSession ? inSessionItems : noSessionItems
+    return (
+        <div>
+            <ul>
+                {
+                    items.map((item: INavItem) => <li>{item.name}</li>)
+                }
+            </ul>
+        </div>
+    )
 }
 
 export default Nav
