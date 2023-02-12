@@ -1,28 +1,35 @@
 interface INav {
-    inSession: boolean
+    items: INavItem[];
 }
 
 interface INavItem {
-    name: string
+    name: string;
+    onClick: () => void;
 }
 
-const NavItem = ({ }: INavItem) => {
-    return <></>
-}
+const NavItem = ({ name, onClick }: INavItem) => {
+    return (
+        <li>
+            <button
+                className="mx-8 px-1 text-xs border-solid border-2 border-black"
+                onClick={onClick}
+            >
+                {name}
+            </button>
+        </li>
+    );
+};
 
-const Nav = ({ inSession }: INav) => {
-    const noSessionItems = [{ name: 'Sign In' }, { name: 'About' }]
-    const inSessionItems = [{ name: 'Sign Out' }, { name: 'About' }, { name: 'Settings' }]
-    const items = inSession ? inSessionItems : noSessionItems
+const Nav = ({ items }: INav) => {
     return (
         <div>
             <ul>
-                {
-                    items.map((item: INavItem) => <li>{item.name}</li>)
-                }
+                {items.map((item: INavItem, i: number) => (
+                    <NavItem key={i} name={item.name} onClick={item.onClick} />
+                ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
-export default Nav
+export default Nav;
