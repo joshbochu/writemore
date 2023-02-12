@@ -82,8 +82,8 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
     ];
     const inSessionItems = [
         { name: "Sign Out", onClick: () => supabase.auth.signOut() },
-        { name: "About", onClick: () => null },
-        { name: "Settings", onClick: () => null },
+        // { name: "About", onClick: () => null },
+        // { name: "Settings", onClick: () => null },
     ];
 
     const items = session ? inSessionItems : noSessionItems;
