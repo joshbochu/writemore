@@ -12,6 +12,7 @@ import { useAutosave } from "react-autosave";
 import Image from "next/image";
 import Streak from "./Streak";
 import Nav from "./Nav";
+import Footer from "./Footer";
 
 const getWordCount = (words: string) =>
     words.split(/\s|\n/g).reduce((acc, curr) => (curr ? acc + 1 : acc), 0);
@@ -112,24 +113,11 @@ const Write = ({ session, supabase, user }: any): JSX.Element => {
                     </div>
                 )}
                 {!showAuthContainer && (
-                    <div className="flex flex-row justify-between">
-                        <div className="p-2 px-0 text-xs">
-                            {wordCount} words{" "}
-                            {session && showSavePost && `• ✓ saved`}
-                        </div>
-                        <div className="px-0 text-xs font-semibold">
-                            {!session && wordCount >= 1 && (
-                                <div
-                                    className="bg-orange-100 border-orange-500 text-orange-700 p-1"
-                                    role="alert"
-                                >
-                                    <p className="font-bold">
-                                        Sign up to save!
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+                    <Footer
+                        wordCount={wordCount}
+                        session={session}
+                        showSavePost={showSavePost}
+                    />
                 )}
             </div>
             <div className={`${session ? "pt-20" : "pt-16"}`}>
