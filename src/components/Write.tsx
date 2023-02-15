@@ -1,11 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
-import {
-    SupabaseClient,
-    useSession,
-    useSupabaseClient,
-    useUser,
-} from "@supabase/auth-helpers-react";
 import { useState, useEffect } from "react";
 import useLocalStorage from "use-local-storage";
 import { useAutosave } from "react-autosave";
